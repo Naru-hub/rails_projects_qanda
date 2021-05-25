@@ -5,6 +5,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @question = Question.find(params[:id])
   end
 
   def new
@@ -24,7 +25,7 @@ class QuestionsController < ApplicationController
   def edit
     @question = Question.find(params[:id])
   end
-  
+
   def update
     @question = Question.find(params[:id])
     if @question.update(question_params)
@@ -34,10 +35,16 @@ class QuestionsController < ApplicationController
       render :edit
     end
   end
-  
-  
+
+ def destroy
+   @question = Question.find(params[:id])
+   @question.destroy
+   redirect_to root_path, notice: 'Success!'
+ end
+
+
  private
-  
+
   def question_params
     params.require(:question).permit(:name, :title, :content)
   end
